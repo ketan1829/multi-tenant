@@ -1,0 +1,26 @@
+{
+    "name": "tenant-management-client",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@mantine/core": "^8.3.14",
+        "@mantine/dates": "^8.3.14",
+        "@mantine/form": "^8.3.14",
+        "@mantine/hooks": "^8.3.14",
+        "@mantine/modals": "^8.3.14",
+        "@tabler/icons-react": "^3.36.1",
+        "axios": "^1.7.7",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-router-dom": "^6.22.3"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.3.3",
+        "vite": "^5.1.6"
+    }
+}
