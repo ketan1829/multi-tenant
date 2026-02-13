@@ -11,5 +11,5 @@ export const config = {
         expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     },
     
-    clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+    clientOrigin: process.env.CLIENT_ORIGIN || 'https://agent-698eda0e3424eda3e1d47--multi-tenant-client.netlify.app',
 };
