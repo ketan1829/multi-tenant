@@ -158,7 +158,7 @@ const UsersPage = () => {
                 </Alert>
             )}
 
-            <Paper shadow="xs" p="md" mb="md" radius="lg" withBorder>
+            <Paper shadow="xs" p="md" mb="md" withBorder>
                 <Stack gap="sm">
                     <Group justify="space-between" align="flex-end">
                         <Group gap="sm" wrap="wrap">
@@ -222,7 +222,7 @@ const UsersPage = () => {
                 </Stack>
             </Paper>
 
-            <Paper shadow="xs" p="md" radius="lg" withBorder>
+            <Paper shadow="xs" p="md" withBorder>
                 {loading ? (
                     <Group justify="center" py="xl">
                         <Loader size="md" />
