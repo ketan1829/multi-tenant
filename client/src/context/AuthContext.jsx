@@ -6,8 +6,8 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   token: null,
   user: null,
-  login: async () => {},
-  logout: () => {},
+  login: async () => { },
+  logout: () => { },
   hasPermission: () => false,
 });
 
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    // Hook for future token expiry handling if needed.
+    // Todo: Hook for future token expiry handling if needed
   }, []);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
