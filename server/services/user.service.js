@@ -239,11 +239,18 @@ const deactivateUser = async (id) => {
   }
 
   if (user.status === 'inactive') {
-    return;
+    return { 
+      message: 'User already inactive',
+      status: user.status 
+    };
   }
 
   user.status = 'inactive';
   await user.save();
+  return { 
+    message: 'User deactivated successfully',
+    status: user.status 
+  };
 };
 
 export default {

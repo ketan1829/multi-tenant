@@ -15,12 +15,11 @@ const auth = async (req, res, next) => {
         }
         const decoded = jwt.verify(token, config.jwt.secret);
 
-        console.log('Decoded token:', decoded);
+        // console.log('Decoded token:', decoded);
 
-        const user = await User.findById(decoded.sub).select('+password')
-            .populate('role').populate('site');
+        const user = await User.findById(decoded.sub).populate('role').populate('site');
 
-        console.log('Fetched user:', user);
+        // console.log('Fetched user:', user);
         
     
         if (!user || user.status !== 'active') {
@@ -39,7 +38,7 @@ const auth = async (req, res, next) => {
             permissions,
             siteId: user.site ? user.site._id.toString() : null,
         };
-        console.log('Authenticated user:', req.user);
+        // console.log('Authenticated user:', req.user);
         
 
         return next();

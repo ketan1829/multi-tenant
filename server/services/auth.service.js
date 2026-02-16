@@ -23,6 +23,7 @@ const generateToken = (user, role) => {
 };
 
 const login = async (email, password) => {
+
   const user = await User.findOne({ email }).select('+password').populate('role');
 
   if (!user) {
@@ -41,6 +42,9 @@ const login = async (email, password) => {
   }
 
   const role = user.role || (await Role.findById(user.role));
+  if (!role) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Role not found');
+  }
 
   const token = generateToken(user, role);
 
