@@ -95,6 +95,7 @@ const createUser = async (payload) => {
     }
   }
 
+
   const user = await User.create({
     name: payload.name,
     email: payload.email,

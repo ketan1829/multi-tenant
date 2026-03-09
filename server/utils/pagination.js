@@ -6,3 +6,11 @@ export const getPagination = (query) => {
     return { page, limit, skip };
   };
   
+// export const checkAdminPermission = (arr1, arr2) => {
+//   let flag = false
+//   for(let per in arr1){
+//     if(!arr2.includes(per)){
+//       flag = false
+//     }
+// }
+

@@ -15,6 +15,8 @@ const requirePermissions = (requiredPermissions = []) => (req, res, next) => {
   const userPermissions = req.user.permissions || [];
 
   const hasAll = requiredPermissions.every((perm) => userPermissions.includes(perm));
+  console.log("hasALl", hasAll, userPermissions);
+  
 
   if (!hasAll) {
     return next(new ApiError(httpStatus.FORBIDDEN, 'Insufficient permissions'));

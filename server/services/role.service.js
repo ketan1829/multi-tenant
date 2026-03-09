@@ -8,13 +8,22 @@ import { getPagination } from '../utils/pagination.js';
 
 const listRoles = async (query) => {
   const { page, limit, skip } = getPagination(query);
-
+  const filterVal = "user:read"
   const filter = {};
 
-  if (query.search) {
+  if (query.search || filterVal) {
+    console.log("ghj");
+    
     const regex = new RegExp(query.search, 'i');
-    filter.$or = [{ name: regex }, { description: regex }];
+    filter.$or = [{ name: regex }, { description: regex }, {permissions: filterVal??filterVal}];
+    console.log("filter",filter );
+    
   }
+  
+  // if(filterVal){
+  //   filter.$or = [{ permissions: filterVal }];
+  // }
+
 
   const rolesPromise = Role.find(filter)
     .sort({ createdAt: -1 })
@@ -24,6 +33,9 @@ const listRoles = async (query) => {
   const countPromise = Role.countDocuments(filter);
 
   const [roles, total] = await Promise.all([rolesPromise, countPromise]);
+
+  console.log("ROLES", roles);
+  
 
   const totalPages = Math.ceil(total / limit);
 
@@ -89,8 +101,13 @@ const getRoleById = async (id) => {
 
 const updateRole = async (id, payload) => {
   const role = await Role.findById(id);
+  const adminRole = await Role.findOne({name: 'Admin'});
   if (!role) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Role not found');
+  }
+
+  if (!adminRole) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No System Roles defined');
   }
 
   if (role.isSystem) {
@@ -99,9 +116,14 @@ const updateRole = async (id, payload) => {
 
   if (payload.name && payload.name.trim() !== role.name) {
     const existing = await Role.findOne({ name: payload.name.trim() });
+    console.log("existing", existing);
+    
     if (existing) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Role name already exists');
     }
+
+    if(adminRole)
+
     role.name = payload.name.trim();
   }
 
@@ -109,7 +131,15 @@ const updateRole = async (id, payload) => {
     role.description = payload.description || '';
   }
 
+  // check
+  console.log("payload p", payload.permissions)
   if (Array.isArray(payload.permissions)) {
+
+    const invalidPermissions = payload.permissions.filter((per)=> !adminRole.permissions.includes(per));
+    if(invalidPermissions.length > 0){
+      throw new ApiError(httpStatus.BAD_REQUEST, `Invalid permissions: ${invalidPermissions.join(', ')}`);
+    }
+
     role.permissions = payload.permissions;
   }
 
